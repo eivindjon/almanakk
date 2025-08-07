@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lærers Almanakk - Fokus</title>
+    <!-- Link til vår CSS-fil -->
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- ================================= -->
+    <!-- LOGIN-SKJERM OVERLAY              -->
+    <!-- ================================= -->
+    <div id="login-overlay">
+        <div class="login-card">
+            <h2>Lærers Almanakk</h2>
+            <p>Logg inn eller registrer deg for å fortsette.</p>
+            <div class="login-form">
+                <input type="email" id="login-email" placeholder="E-post">
+                <input type="password" id="login-password" placeholder="Passord">
+                <p id="login-error" class="error-message"></p>
+                <button id="login-button">Logg inn</button>
+                <button id="register-button" class="secondary">Opprett ny bruker</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================================= -->
+    <!-- HOVEDAPPLIKASJONEN                -->
+    <!-- ================================= -->
+    <div class="app-container">
+        <header class="header">
+            <div class="header-title">Lærers almanakk</div>
+            <div class="header-controls">
+                <span class="date">24. april</span>
+                <button id="focus-mode-toggle" title="Ro-modus">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                </button>
+            </div>
+        </header>
+
+        <aside class="sidebar">
+            <div class="card ai-search-card">
+                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--text-color-light);"><path d="m21 21-6-6m2-5a7 7 0 1 1-14 0 7 7 0 0 1 14 0z"></path></svg>
+                <input type="text" placeholder="Snakk med AI...">
+            </div>
+            <!-- Logg ut-knappen er her -->
+            <div class="card">
+                <button id="logout-button" class="button-logout">Logg ut</button>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="main-column">
+                <div class="card overview-card" id="focus-item">
+                    <h3 class="card-title">Dagens overblikk</h3>
+                    <div class="next-class">
+                        <h4>Norsk</h4>
+                        <p>10:00 – 10:45 (Rom A1)</p>
+                    </div>
+                    <!-- Denne listen vil snart bli dynamisk -->
+                    <div class="card todo-card">
+						<h3 class="card-title">TODO-Liste</h3>
+						
+						<!-- NYTT: Input-felt for å legge til oppgaver -->
+						<div class="add-todo-form">
+							<input type="text" id="new-todo-input" placeholder="Legg til et nytt gjøremål...">
+							<button id="add-todo-button-submit">+</button>
+						</div>
+
+						<!-- Her vil JavaScript fylle inn listen med gjøremål -->
+						<div id="todo-list-container">
+							<!-- Eksempel på hvordan et gjøremål vil se ut (dette kan slettes) -->
+							<!--
+							<div class="todo-item" data-id="some-unique-id">
+								<div class="checkbox"></div>
+								<div class="text">Min første oppgave</div>
+								<button class="delete-todo-button">×</button>
+							</div>
+							-->
+						</div>
+					</div>
+
+                <div class="card schedule-card">
+                    <div style="padding: 1.5rem 1.5rem 0 1.5rem;">
+                       <h3 class="card-title">Timeplan</h3>
+                    </div>
+                    <div class="schedule-grid">
+                        <div></div>
+                        <div class="schedule-header">Mandag</div>
+                        <div class="schedule-header">Tirsdag</div>
+                        <div class="schedule-header">Onsdag</div>
+                        <div class="schedule-header">Torsdag</div>
+                        
+                        <div class="time-label">08:00</div>
+                        <div class="time-label">10:00</div>
+                        <div class="schedule-item norsk">Norsk</div>
+                        <div class="time-label">11:00</div>
+                        <div class="schedule-item matematikk">Matematikk</div>
+                        <div class="time-label">12:00</div>
+                        <div class="time-label">13:00</div>
+                         <div class="schedule-item historie">Historie</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="right-column">
+                <div class="card todo-card">
+                    <h3 class="card-title">TODO-Liste</h3>
+                     <div id="todo-list-container">
+                        <!-- TODO-elementer vil bli lastet inn her fra Firestore -->
+                     </div>
+                </div>
+                <div class="card analytics-card">
+                     <h3 class="card-title">Innsikt</h3>
+                     <svg viewBox="0 0 100 40" xmlns="http://www.w3.org/2000/svg">
+                        <polyline fill="none" stroke="var(--accent-color-blue-dark)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            points="5,30 20,20 35,25 50,15 65,22 80,12 95,18" />
+                        <circle cx="5" cy="30" r="1.5" fill="var(--accent-color-blue-dark)"/><circle cx="20" cy="20" r="1.5" fill="var(--accent-color-blue-dark)"/><circle cx="35" cy="25" r="1.5" fill="var(--accent-color-blue-dark)"/><circle cx="50" cy="15" r="1.5" fill="var(--accent-color-blue-dark)"/><circle cx="65" cy="22" r="1.5" fill="var(--accent-color-blue-dark)"/><circle cx="80" cy="12" r="1.5" fill="var(--accent-color-blue-dark)"/><circle cx="95" cy="18" r="1.5" fill="var(--accent-color-blue-dark)"/>
+                    </svg>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- ================================= -->
+    <!-- FLOATING ACTION BUTTON OG MENY    -->
+    <!-- ================================= -->
+    <div class="fab" id="fab">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+    </div>
+    
+    <div class="fab-menu" id="fab-menu">
+        <div class="fab-menu-item" id="add-todo-button"> <!-- La til ID her -->
+            <span>Legg til gjøremål</span>
+            <div class="icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+            </div>
+        </div>
+        <!-- ... andre meny-elementer ... -->
+    </div>
+
+
+    <!-- ================================= -->
+    <!-- SCRIPTS                           -->
+    <!-- ================================= -->
+    <!-- Firebase SDK - Dette er bibliotekene fra Google -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-firestore-compat.js"></script>
+
+    <!-- Våre egne JavaScript-filer -->
+    <!-- 1. Først kobler vi til Firebase med våre nøkler -->
+    <script src="js/firebase-config.js"></script>
+    <!-- 2. Deretter kjører vi applikasjonslogikken vår -->
+    <script src="js/app.js"></script>
+
+</body>
+</html>
