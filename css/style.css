@@ -491,3 +491,20 @@ body.focus-mode .overview-card {
 .delete-todo-button:hover {
     color: #e74c3c;
 }
+
+/* Styling for AI input under lasting */
+#ai-input.loading {
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        background-color: var(--main-bg-color);
+    }
+    50% {
+        background-color: var(--accent-color-blue);
+    }
+    100% {
+        background-color: var(--main-bg-color);
+    }
+}
